@@ -314,7 +314,9 @@ body {
 .stat-card:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-card);
-  border-color: var(--border-dark);
+  border-color: var(
+    --border-dark
+  ); /* Ensure --border-dark is defined if needed */
 }
 
 .stat-icon {
@@ -460,7 +462,7 @@ body {
 
 .close-btn {
   background: transparent;
-  color: var(--text-light);
+  color: var(--text-light); /* Ensure --text-light is defined or fallback */
   border: none;
   font-size: 24px;
   cursor: pointer;
@@ -572,12 +574,20 @@ body {
 }
 
 /* ==========================================================================
-   ADMIN & BURSAR DASHBOARD EXTRAS
+   ADMIN & BURSAR DASHBOARD EXTRAS (UPDATED & MODERNIZED)
    ========================================================================== */
 .bursar-nav-buttons {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
+  overflow-x: auto;
+  padding-bottom: 5px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.bursar-nav-buttons::-webkit-scrollbar {
+  display: none;
 }
 
 .nav-btn {
@@ -590,6 +600,7 @@ body {
   font-size: 13px;
   cursor: pointer;
   transition: var(--transition-smooth);
+  white-space: nowrap;
 }
 
 .nav-btn.active,
@@ -597,23 +608,34 @@ body {
   background: var(--primary-blue);
   color: white;
   border-color: var(--primary-blue);
+  box-shadow: var(--shadow-sm);
 }
 
 .payments-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 25px;
+  margin-top: 20px;
 }
 
 .payment-card {
+  background: var(--bg-card);
+  padding: 20px;
+  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--border-color);
   border-top: none;
   border-left: 5px solid var(--accent-gold);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
 }
 
 .teller-image-container {
   background: var(--bg-input);
   border-radius: var(--border-radius-sm);
-  height: 200px;
+  min-height: 180px;
+  height: auto;
+  aspect-ratio: 16 / 9;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -623,72 +645,67 @@ body {
 }
 
 .teller-image {
+  max-width: 100%;
   max-height: 100%;
   object-fit: contain;
   transition: transform 0.3s;
   cursor: pointer;
 }
+
 .teller-image:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 .action-buttons-row {
   display: flex;
   gap: 12px;
-  margin-top: 15px;
+  margin-top: auto;
+  padding-top: 15px;
+}
+
+.btn-approve,
+.btn-resolved,
+.btn-reject,
+.btn-in-progress {
+  flex: 1;
+  padding: 12px;
+  border-radius: var(--border-radius-sm);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: var(--transition-smooth);
 }
 
 .btn-approve,
 .btn-resolved {
-  flex: 1;
   background: var(--success-green);
   color: white;
-  padding: 12px;
   border: none;
-  border-radius: var(--border-radius-sm);
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: var(--transition-smooth);
 }
+
 .btn-reject {
-  flex: 1;
   background: var(--bg-main);
   color: var(--danger-red);
-  padding: 12px;
   border: 1px solid var(--danger-red);
-  border-radius: var(--border-radius-sm);
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: var(--transition-smooth);
 }
+
 .btn-in-progress {
-  flex: 1;
   background: var(--warning-orange);
   color: white;
-  padding: 12px;
   border: none;
-  border-radius: var(--border-radius-sm);
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: var(--transition-smooth);
 }
+
 .btn-approve:hover,
 .btn-resolved:hover,
 .btn-in-progress:hover {
   filter: brightness(0.9);
+  transform: translateY(-2px);
 }
+
 .btn-reject:hover {
   background: var(--danger-red);
   color: white;
@@ -1066,7 +1083,7 @@ input[type="file"]::file-selector-button:hover {
 }
 
 /* ==========================================================================
-   RESPONSIVE DESIGN 
+   RESPONSIVE DESIGN (UPDATED)
    ========================================================================== */
 @media (max-width: 900px) {
   .login-card {
@@ -1077,27 +1094,31 @@ input[type="file"]::file-selector-button:hover {
 
 @media (max-width: 768px) {
   .dashboard-container {
-    padding: 20px;
+    padding: 15px;
   }
+
   .dashboard-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 20px;
-    padding: 25px;
+    gap: 15px;
+    padding: 20px;
   }
+
+  /* Creates a horizontal scrollable menu for mobile */
   .bursar-nav-buttons {
+    flex-wrap: nowrap;
     width: 100%;
   }
-  .nav-btn,
-  .logout-btn {
-    flex: 1;
-    text-align: center;
-    justify-content: center;
+
+  .nav-btn {
+    flex: 0 0 auto;
   }
+
   .stats-grid,
   .payments-grid {
     grid-template-columns: 1fr;
   }
+
   .modal-content {
     padding: 25px;
   }
@@ -1107,32 +1128,39 @@ input[type="file"]::file-selector-button:hover {
   .login-card {
     padding: 30px 20px;
   }
+
   .form-row {
     grid-template-columns: 1fr;
     gap: 0;
   }
+
   .student-details-grid,
   .payment-details-grid {
     grid-template-columns: 1fr;
   }
+
   .hostel-section-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 8px;
+    gap: 12px;
   }
+
   .flex-between {
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
   }
+
+  /* Stacks action buttons perfectly on small phones */
   .action-buttons-row {
     flex-direction: column;
+    gap: 10px;
   }
+
   .btn-approve,
   .btn-reject,
   .btn-in-progress,
   .btn-resolved {
     width: 100%;
-    justify-content: center;
   }
 }
